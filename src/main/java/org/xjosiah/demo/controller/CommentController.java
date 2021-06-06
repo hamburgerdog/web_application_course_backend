@@ -34,7 +34,7 @@ public class CommentController {
 
     @GetMapping("/{begin}")
     public ResponseEntity<String> getComments(@NotNull @PathVariable String begin) {
-        int limited = 10;
+        int limited = 5;
         List<Comment> comments = commentService.getCommentsByLimited(Integer.parseInt(begin), limited);
         String result = DIYResponseEntity.DIYResponse("3000", comments, "「获取成功」");
         return ResponseEntity.ok(result);

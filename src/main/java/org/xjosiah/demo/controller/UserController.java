@@ -3,10 +3,7 @@ package org.xjosiah.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.xjosiah.demo.entity.User;
 import org.xjosiah.demo.services.UserService;
 import org.xjosiah.demo.utils.DIYResponseEntity;
@@ -47,6 +44,7 @@ public class UserController {
      * 登录相关的错误码：
      * 【1000】-登录成功
      * 【1001】-其他原因登录失败
+     * 【1010】-获取头像成功
      */
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
@@ -56,5 +54,11 @@ public class UserController {
         }
         String token = TokenUtils.token(username, password);
         return ResponseEntity.ok(DIYResponseEntity.DIYResponse("1000", result, token));
+    }
+
+    @GetMapping("/pic/{username}")
+    public ResponseEntity<String> getUserPic(@PathVariable String username){
+        String picUrl = userService.getUserPicByName(username);
+        return  ResponseEntity.ok(DIYResponseEntity.DIYResponse("1010",picUrl,"「操作完成」获取头像成功"));
     }
 }

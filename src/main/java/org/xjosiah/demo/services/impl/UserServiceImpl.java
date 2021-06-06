@@ -18,7 +18,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean register(User user) {
-        System.out.println(user);
         return userMapper.createUser(user);
     }
 
@@ -26,5 +25,10 @@ public class UserServiceImpl implements UserService {
     public Boolean checkWhetherHasUser(String username) {
         User user = userMapper.findUserByName(username);
         return user != null;
+    }
+
+    @Override
+    public String getUserPicByName(String username) {
+        return userMapper.findUserByName(username).getPicUrl();
     }
 }

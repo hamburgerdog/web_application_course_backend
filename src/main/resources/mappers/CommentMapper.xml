@@ -8,7 +8,7 @@
         delete from comment where commentId =#{commentId}
     </delete>
     <select id="selCommentsByLimited" resultType="org.xjosiah.demo.entity.Comment">
-        select commentId, title, content, createdTime, author from comment limit #{limited} offset #{begin};
+        select commentId, title, content, createdTime, author from comment order by createdTime DESC limit #{limited} offset #{begin};
     </select>
     <select id="selCommentById" resultType="org.xjosiah.demo.entity.Comment">
         select commentId, title, content, createdTime, author from comment where commentId = #{commentId}
