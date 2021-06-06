@@ -14,7 +14,7 @@ public class DIYResponseEntity {
     private Object data;
     private String msg;
 
-    public static ResponseEntity<String> DIYResponse(String code, Object data, String message) {
-        return ResponseEntity.ok(JSONUtil.toJsonStr(new DIYResponseEntity(code, data, message)));
+    public static String DIYResponse(String code, Object data, String message) {
+        return JSONUtil.toJsonStr(new DIYResponseEntity(code, data, message));
     }
 }

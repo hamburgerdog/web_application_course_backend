@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.xjosiah.demo.utils.DIYResponseEntity;
 import org.xjosiah.demo.entity.User;
 import org.xjosiah.demo.services.UserService;
+import org.xjosiah.demo.utils.TokenUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 @Controller
@@ -20,7 +24,6 @@ import javax.validation.constraints.NotNull;
 public class UserController {
     @Autowired
     UserService userService;
-
     /**
      * 注册功能
      * 注册有关的状态码说明：
@@ -32,15 +35,15 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestParam @NotNull String username, @RequestParam @NotNull String password, @RequestParam @NotNull String reword, @RequestParam String picUrl) {
         if (!password.equals(reword)) {
-            return DIYResponseEntity.DIYResponse("2001", null, "「注册失败」请检查并重新校验密码");
+            return ResponseEntity.ok(DIYResponseEntity.DIYResponse("2001", null, "「注册失败」请检查并重新校验密码"));
         }
         if (userService.checkWhetherHasUser(username)) {
-            return DIYResponseEntity.DIYResponse("2002", null, "「注册失败」请用户已存在，请直接登录");
+            return ResponseEntity.ok(DIYResponseEntity.DIYResponse("2002", null, "「注册失败」请用户已存在，请直接登录"));
         }
         if (!userService.register(new User(username, password, picUrl, "user"))) {
-            return DIYResponseEntity.DIYResponse("2999", null, "「注册失败」请重新注册");
+            return ResponseEntity.ok(DIYResponseEntity.DIYResponse("2999", null, "「注册失败」请重新注册"));
         }
-        return DIYResponseEntity.DIYResponse("2000", new User(username, password, picUrl, "user"), "「注册成功」");
+        return ResponseEntity.ok(DIYResponseEntity.DIYResponse("2000", new User(username, password, picUrl, "user"), "「注册成功」"));
     }
 
     /**
@@ -53,8 +56,9 @@ public class UserController {
     public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
         User result = userService.login(username, password);
         if (result == null) {
-            return DIYResponseEntity.DIYResponse("1001", null, "「登录失败」请重新登录");
+            return ResponseEntity.ok(DIYResponseEntity.DIYResponse("1001", null, "「登录失败」请重新登录"));
         }
-        return DIYResponseEntity.DIYResponse("1000", result, "「登录成功」");
+        String token = TokenUtils.token(username, password);
+        return ResponseEntity.ok(DIYResponseEntity.DIYResponse("1000", result, token));
     }
 }
