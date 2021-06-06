@@ -8,7 +8,7 @@
         delete from user where username = #{username} and password = #{password}
     </delete>
     <select id="findUserByName" resultType="org.xjosiah.demo.entity.User">
-        select username,password from user where username = #{username};
+        select username,password,picUrl,role from user where username = #{username};
     </select>
     <select id="loginUser" resultType="org.xjosiah.demo.entity.User">
         select username,password from user where username = #{username} and password = #{password};

@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TokenUtils {
-    //设置过期时间
-    private static final long EXPIRE_DATE = 30 * 60 * 100000;
+    //设置过期时间为15分钟
+    private static final long EXPIRE_DATE = 15 * 60 * 1000;
     //token秘钥
     private static final String TOKEN_SECRET = "xjosiah";
 
@@ -43,16 +43,17 @@ public class TokenUtils {
     /**
      * 验证token，通过返回true
      * @param token 需要校验的串
+     * @return 解密后的对象
      */
-    public static boolean verify(String token) {
+    public static DecodedJWT verify(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
-            return true;
+            return jwt;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 }

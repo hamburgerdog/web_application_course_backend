@@ -1,6 +1,5 @@
 package org.xjosiah.demo.controller;
 
-import cn.hutool.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -8,14 +7,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.xjosiah.demo.utils.DIYResponseEntity;
 import org.xjosiah.demo.entity.User;
 import org.xjosiah.demo.services.UserService;
+import org.xjosiah.demo.utils.DIYResponseEntity;
 import org.xjosiah.demo.utils.TokenUtils;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 @Controller
