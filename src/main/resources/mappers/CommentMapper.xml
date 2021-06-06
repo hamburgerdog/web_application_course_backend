@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xjosiah.demo.dao.CommentMapper">
+    <insert id="insertComment">
+        insert into comment(commentId, title, content, createdTime, author) value (#{uuid},#{title},#{content},#{date},#{author})
+    </insert>
+    <delete id="delCommentById">
+        delete from comment where commentId =#{commentId}
+    </delete>
+    <select id="selCommentsByLimited" resultType="org.xjosiah.demo.entity.Comment">
+        select commentId, title, content, createdTime, author from comment limit #{limited} offset #{begin};
+    </select>
+    <select id="selCommentById" resultType="org.xjosiah.demo.entity.Comment">
+        select commentId, title, content, createdTime, author from comment where commentId = #{commentId}
+    </select>
+</mapper>
