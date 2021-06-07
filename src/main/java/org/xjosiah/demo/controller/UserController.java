@@ -44,12 +44,21 @@ public class UserController {
      * 登录相关的错误码：
      * 【1000】-登录成功
      * 【1001】-其他原因登录失败
+     * 【1002】-用户不存在
+     * 【1003】-登录密码错误
      * 【1010】-获取头像成功
      */
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
         User result = userService.login(username, password);
         if (result == null) {
+            User user = userService.getUserByName(username);
+            if(user == null){
+                return ResponseEntity.ok(DIYResponseEntity.DIYResponse("1002", null, "「登录失败」用户未注册"));
+            }
+            if (!user.getPassword().equals(password)){
+                return ResponseEntity.ok(DIYResponseEntity.DIYResponse("1003", null, "「登录失败」登录密码错误"));
+            }
             return ResponseEntity.ok(DIYResponseEntity.DIYResponse("1001", null, "「登录失败」请重新登录"));
         }
         String token = TokenUtils.token(username, password);
