@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 public class UserController {
     @Autowired
     UserService userService;
+
     /**
      * 注册功能
      * 注册有关的状态码说明：
@@ -53,10 +54,10 @@ public class UserController {
         User result = userService.login(username, password);
         if (result == null) {
             User user = userService.getUserByName(username);
-            if(user == null){
+            if (user == null) {
                 return ResponseEntity.ok(DIYResponseEntity.DIYResponse("1002", null, "「登录失败」用户未注册"));
             }
-            if (!user.getPassword().equals(password)){
+            if (!user.getPassword().equals(password)) {
                 return ResponseEntity.ok(DIYResponseEntity.DIYResponse("1003", null, "「登录失败」登录密码错误"));
             }
             return ResponseEntity.ok(DIYResponseEntity.DIYResponse("1001", null, "「登录失败」请重新登录"));
@@ -66,8 +67,8 @@ public class UserController {
     }
 
     @GetMapping("/pic/{username}")
-    public ResponseEntity<String> getUserPic(@PathVariable String username){
+    public ResponseEntity<String> getUserPic(@PathVariable String username) {
         String picUrl = userService.getUserPicByName(username);
-        return  ResponseEntity.ok(DIYResponseEntity.DIYResponse("1010",picUrl,"「操作完成」获取头像成功"));
+        return ResponseEntity.ok(DIYResponseEntity.DIYResponse("1010", picUrl, "「操作完成」获取头像成功"));
     }
 }

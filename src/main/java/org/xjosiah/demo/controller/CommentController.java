@@ -17,6 +17,7 @@ import java.util.List;
 /**
  * 状态码说明：
  * 3000-获取文章成功：不需要权限
+ * 3001-添加文章成功
  * 3002-鉴权失败
  * 3003-tokne丢失
  * <p>
@@ -39,7 +40,6 @@ public class CommentController {
         String result = DIYResponseEntity.DIYResponse("3000", comments, "「获取成功」");
         return ResponseEntity.ok(result);
     }
-
     @PostMapping("/add")
     public ResponseEntity<String> addComment(@NotNull @Param("title") String title, @NotNull @Param("content") String content, @NotNull @Param("token") String token) {
         String resultForToken = getUsernameInToken(token);
